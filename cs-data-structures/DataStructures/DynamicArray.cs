@@ -1,14 +1,13 @@
 using System;
 using System.Text;
+using DataStructures.Interfaces;
 
 namespace DataStructures
 {
-    public class DynamicArray<T> 
+    public class DynamicArray<T> : IndexedDataStructure<T>, IIndexedModificableDataStructure<T>
     {
         private Array _array;
         private int _capacity;
-
-        public int Length { get; private set; }
 
         public DynamicArray() : this(10) {}
 
@@ -18,20 +17,7 @@ namespace DataStructures
             _capacity = initialCapacity;
         }
 
-        public T this[int index] 
-        {  
-            get 
-            {
-                return GetAt(index);
-            }
-
-            set
-            {
-                InsertAt(value, index);
-            }
-        }
-
-        public T GetAt(int index)
+        public override T GetAt(int index)
         {
             if(index >= Length) 
             {
@@ -39,6 +25,15 @@ namespace DataStructures
             }
             return (T)_array.GetValue(index);
         } 
+
+        public override void SetAt(T element, int index)
+        {
+            if(index < 0 || index >= Length) 
+            {
+                throw new IndexOutOfRangeException();
+            }
+            _array.SetValue(element, index);
+        }
 
         public void Add(T element)
         {
@@ -50,11 +45,31 @@ namespace DataStructures
             ++Length;
         }
 
-        public void InsertAt(T element, int index)
+        public override void InsertAt(T element, int index)
         {
+            if(index == 0 && Length == 0) {
+                Add(element);
+                return;
+            }
+
             if(index >= Length) 
             {
                 throw new IndexOutOfRangeException();
+            }
+
+            if(Length + 1 >= _capacity) {
+                _capacity += 10;
+            }
+            var newArray = Array.CreateInstance(typeof(T), _capacity);
+            for(int i = 0, j = 0 ; i < Length; i++, j++) 
+            {
+                if(i == index) {
+                    newArray.SetValue(element, j);
+                    --i;
+                    continue;
+                }
+
+                newArray.SetValue((T)_array.GetValue(i), j);
             }
             _array.SetValue(element, index);
         }
@@ -83,7 +98,7 @@ namespace DataStructures
 
         public void RemoveAt(int removeIndex)
         {
-            if(removeIndex >= Length) {
+            if(removeIndex < 0 || removeIndex >= Length) {
                 throw new IndexOutOfRangeException();
             }
 
@@ -98,20 +113,7 @@ namespace DataStructures
                 newArray.SetValue((T)_array.GetValue(i), j);
             }
             _array = newArray;
-        }
-
-        public override string ToString() 
-        {
-            var sb = new StringBuilder("[");
-            for(var i = 0; i < Length; i++) 
-            {
-                sb.Append((T)_array.GetValue(i));
-                if(i < Length-1) {
-                    sb.Append(",");
-                }
-            }
-            sb.Append("]");
-            return sb.ToString();
+            --Length;
         }
 
         private void ResizeAndCopy()
