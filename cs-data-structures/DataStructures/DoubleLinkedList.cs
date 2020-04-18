@@ -89,7 +89,8 @@ namespace DataStructures
                     return;
                 }
                 var prevHead = _head;
-                _head = new DoubleLinkedListElement<T>(element, prevHead);
+                _head = new DoubleLinkedListElement<T>(element, null, prevHead);
+                prevHead.Prev = _head;
                 ++Length;
                 return;
             }
@@ -99,7 +100,7 @@ namespace DataStructures
                 current = current.Next;
             }
             var previousNext = current.Next;
-            current.Next = new DoubleLinkedListElement<T>(element, previousNext);
+            current.Next = new DoubleLinkedListElement<T>(element, current, previousNext);
             ++Length;
         }
 
