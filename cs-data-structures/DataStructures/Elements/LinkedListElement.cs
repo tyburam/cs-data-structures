@@ -1,4 +1,4 @@
-namespace DataStructures
+namespace DataStructures.Elements
 {
     public class LinkedListElement<T>
     {
