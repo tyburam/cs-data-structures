@@ -6,7 +6,7 @@ namespace DataStructures
 {
     public class DoubleLinkedList<T> : IndexedDataStructure<T>, IIndexedModificableDataStructure<T>
     {
-        private DoubleLinkedListElement<T> _head;
+        private DoubleLinkedElement<T> _head;
 
         public DoubleLinkedList()
         {
@@ -18,7 +18,7 @@ namespace DataStructures
             ++Length;
             if(_head == null) 
             {
-                _head = new DoubleLinkedListElement<T>(element);
+                _head = new DoubleLinkedElement<T>(element);
                 return;
             }
 
@@ -26,7 +26,7 @@ namespace DataStructures
             while(current.Next != null) {
                 current = current.Next;
             }
-            current.Next = new DoubleLinkedListElement<T>(element, current);
+            current.Next = new DoubleLinkedElement<T>(element, current);
         }
 
         public override T GetAt(int index)
@@ -89,7 +89,7 @@ namespace DataStructures
                     return;
                 }
                 var prevHead = _head;
-                _head = new DoubleLinkedListElement<T>(element, null, prevHead);
+                _head = new DoubleLinkedElement<T>(element, null, prevHead);
                 prevHead.Prev = _head;
                 ++Length;
                 return;
@@ -100,7 +100,8 @@ namespace DataStructures
                 current = current.Next;
             }
             var previousNext = current.Next;
-            current.Next = new DoubleLinkedListElement<T>(element, current, previousNext);
+            current.Next = new DoubleLinkedElement<T>(element, current, previousNext);
+            previousNext.Prev = current.Next;
             ++Length;
         }
 

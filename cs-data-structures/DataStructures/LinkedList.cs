@@ -6,7 +6,7 @@ namespace DataStructures
 {
     public class LinkedList<T> : IndexedDataStructure<T>, IIndexedModificableDataStructure<T>
     {
-        private LinkedListElement<T> _head;
+        private LinkedElement<T> _head;
 
         public LinkedList()
         {
@@ -18,7 +18,7 @@ namespace DataStructures
             ++Length;
             if(_head == null) 
             {
-                _head = new LinkedListElement<T>(element);
+                _head = new LinkedElement<T>(element);
                 return;
             }
 
@@ -26,7 +26,7 @@ namespace DataStructures
             while(current.Next != null) {
                 current = current.Next;
             }
-            current.Next = new LinkedListElement<T>(element);
+            current.Next = new LinkedElement<T>(element);
         }
 
         public override T GetAt(int index)
@@ -89,7 +89,7 @@ namespace DataStructures
                     return;
                 }
                 var prevHead = _head;
-                _head = new LinkedListElement<T>(element, prevHead);
+                _head = new LinkedElement<T>(element, prevHead);
                 ++Length;
                 return;
             }
@@ -99,7 +99,7 @@ namespace DataStructures
                 current = current.Next;
             }
             var previousNext = current.Next;
-            current.Next = new LinkedListElement<T>(element, previousNext);
+            current.Next = new LinkedElement<T>(element, previousNext);
             ++Length;
         }
 
@@ -134,7 +134,7 @@ namespace DataStructures
             }
 
             var current = _head;
-            LinkedListElement<T> previous = null;
+            LinkedElement<T> previous = null;
             for(var i = 0; i < removeIndex; i++) {
                 previous = current;
                 current = current.Next;
