@@ -7,6 +7,25 @@ namespace DataStructures.Tests
     public class DynamicArrayTests
     {
         [Fact]
+        public void Constructor_ForGoodParameter_CreatesDynamicAray()
+        {
+            //arrange + act
+            var da = new DynamicArray<int>(10);
+            //assert
+            da.Should().NotBeNull();
+            da.Length.Should().Be(0);
+        }
+
+        [Fact]
+        public void Constructor_ForBadParameter_ThrowsArgumentException()
+        {
+            //arrange + act
+            Action act = () => { new DynamicArray<int>(0); };
+            //assert
+            act.Should().Throw<ArgumentException>();
+        }
+
+        [Fact]
         public void GetAt_ForEmptyArray_ThrowsIndexOutOfRangeException()
         {
             //arrange

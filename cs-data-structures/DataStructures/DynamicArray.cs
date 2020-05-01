@@ -3,6 +3,9 @@ using DataStructures.Interfaces;
 
 namespace DataStructures
 {
+    /// <summary>
+    /// This class represents a collection of elements implemented as an dynamically resized array
+    /// </summary>
     public class DynamicArray<T> : IndexedDataStructure<T>, IIndexedModificableDataStructure<T>
     {
         private Array _array;
@@ -12,19 +15,38 @@ namespace DataStructures
 
         public DynamicArray(int initialCapacity)
         {
+            if(initialCapacity <= 0) {
+                throw new ArgumentException(nameof(initialCapacity));
+            }
             _array = Array.CreateInstance(typeof(T), initialCapacity);
             _capacity = initialCapacity;
         }
 
+        /// <summary>
+        /// Returns the element at given index
+        /// </summary>
+        /// <param name="index">Index of the element</param>
+        /// <returns>
+        /// The element on that particular index
+        /// </returns>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the collection is empty or 
+        /// the index is either lesser than 0 or greater or equal to the length of the collection</exception>
         public override T GetAt(int index)
         {
-            if(index >= Length) 
+            if(Length == 0 || index < 0 || index >= Length) 
             {
                 throw new IndexOutOfRangeException();
             }
             return (T)_array.GetValue(index);
         } 
 
+        /// <summary>
+        /// Changes the value at given index
+        /// </summary>
+        /// <param name="element">Element</param>
+        /// <param name="index">Index of the element</param>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the index is either lesser 
+        /// than 0 or greater or equal to the length of the collection</exception>
         public override void SetAt(T element, int index)
         {
             if(index < 0 || index >= Length) 
@@ -34,6 +56,10 @@ namespace DataStructures
             _array.SetValue(element, index);
         }
 
+        /// <summary>
+        /// Adds element to the end of the collection
+        /// </summary>
+        /// <param name="element">Element that will be added</param>
         public void Add(T element)
         {
             if(Length == _capacity) {
@@ -44,16 +70,23 @@ namespace DataStructures
             ++Length;
         }
 
+        /// <summary>
+        /// Inserts given element at given index
+        /// </summary>
+        /// <param name="element">Element</param>
+        /// <param name="index">insertion index</param>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the index is either lesser 
+        /// than 0 or greater than the length of the collection</exception>
         public override void InsertAt(T element, int index)
         {
+            if(index < 0 || index > Length) 
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             if(index == 0 && Length == 0) {
                 Add(element);
                 return;
-            }
-
-            if(index >= Length) 
-            {
-                throw new IndexOutOfRangeException();
             }
 
             if(Length + 1 >= _capacity) {
@@ -73,6 +106,13 @@ namespace DataStructures
             _array.SetValue(element, index);
         }
 
+        /// <summary>
+        /// Finds index of the given element
+        /// </summary>
+        /// <param name="element">Element</param>
+        /// <returns>
+        /// Index of the element if it's in the collection or -1 if it's not
+        /// </returns>
         public int IndexOf(T element)
         {
             for(var i = 0; i < Length; i++) 
@@ -85,6 +125,11 @@ namespace DataStructures
             return -1;
         }
 
+        /// <summary>
+        /// Removes given element from the collection. 
+        /// It does nothing if collection is empty or element is not in
+        /// </summary>
+        /// <param name="element">Element< to be removed</param>
         public void Remove(T element)
         {
             var removeIndex = IndexOf(element);
@@ -95,6 +140,12 @@ namespace DataStructures
             RemoveAt(removeIndex);
         }
 
+        /// <summary>
+        /// Removes element of the collection
+        /// </summary>
+        /// <param name="index">Deletion index</param>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the index is either lesser 
+        /// than 0 or greater or equal to the length of the collection</exception>
         public void RemoveAt(int removeIndex)
         {
             if(removeIndex < 0 || removeIndex >= Length) {

@@ -1,5 +1,9 @@
 namespace DataStructures.Elements
 {
+    /// <summary>
+    /// This class represents an object of iterable sequence which contains value 
+    /// and references to the previous and the next element of that sequence
+    /// </summary>
     public class DoubleLinkedElement<T>
     {
         public T Value { get; set; }
