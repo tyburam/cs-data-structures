@@ -3,6 +3,9 @@ using DataStructures.Elements;
 
 namespace DataStructures
 {
+    /// <summary>
+    /// This class represents a collection of elements stored and accessed in LIFO way
+    /// </summary>
     public class Stack<T>
     {
         private DoubleLinkedElement<T> _first;
@@ -10,6 +13,13 @@ namespace DataStructures
 
         public int Length { get; private set; }
 
+        /// <summary>
+        /// Returns the element from the end of the collection without actually removing it
+        /// </summary>
+        /// <returns>
+        /// Element at the end of the collection
+        /// </returns>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the collection is empty</exception>
         public T Peek()
         {
             if(_last == null) {
@@ -18,6 +28,10 @@ namespace DataStructures
             return _last.Value;
         }
 
+        /// <summary>
+        /// Adds element to collection
+        /// </summary>
+        /// <param name="element">Element</param>
         public void Push(T element)
         {
             ++Length;
@@ -36,6 +50,13 @@ namespace DataStructures
             _last = _last.Next;
         }
 
+        /// <summary>
+        /// Returns the last element of the collection
+        /// </summary>
+        /// <returns>
+        /// The last element of the collection
+        /// </returns>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the collection is empty</exception>
         public T Pop()
         {
             if(_last == null) {

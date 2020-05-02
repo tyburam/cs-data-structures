@@ -14,8 +14,8 @@ namespace DataStructures.Tests
             //act
             var uf = new UnionFind(length);
             //assert
-            uf.Components.Should().Be(length);
-            uf.Length.Should().Be(length);
+            uf.ComponentsCount.Should().Be(length);
+            uf.InitialComponentsCount.Should().Be(length);
         }
 
         [Fact]
@@ -77,8 +77,8 @@ namespace DataStructures.Tests
             //act
             uf.Unify(3, 4);
             //assert
-            uf.Components.Should().Be(4);
-            uf.Length.Should().Be(length);
+            uf.ComponentsCount.Should().Be(4);
+            uf.InitialComponentsCount.Should().Be(length);
         }
 
         [Fact]

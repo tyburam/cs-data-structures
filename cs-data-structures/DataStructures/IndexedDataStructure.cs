@@ -2,6 +2,11 @@ using System.Text;
 
 namespace DataStructures
 {
+    /// <summary>
+    /// This an abstract class that represents a collection of elements
+    /// that allows accessing by index using [] and three access methods:
+    /// GetAt, SetAt, InsertAt 
+    /// </summary>
     public abstract class IndexedDataStructure<T>
     {
         public int Length { get; protected set; }

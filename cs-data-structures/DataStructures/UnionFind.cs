@@ -2,33 +2,46 @@ using System;
 
 namespace DataStructures
 {
+    /// <summary>
+    /// This class represent a special usage data structure used for grouping elements
+    /// of any collection
+    /// </summary>
     public class UnionFind
     {
-        public int Length { get; }
-        public int Components { get; private set; }
+        public int InitialComponentsCount { get; }
+        public int ComponentsCount { get; private set; }
 
         private int[] _componentsSizes;
         private int[] _parentNodes;
 
-        public UnionFind(int length)
+        public UnionFind(int componentsCount)
         {
-            if(length <= 0) {
-                throw new ArgumentException(nameof(length));
+            if(componentsCount <= 0) {
+                throw new ArgumentException(nameof(componentsCount));
             }
 
-            Length = Components = length;
-            _componentsSizes = new int[length];
-            _parentNodes = new int[length];
+            InitialComponentsCount = ComponentsCount = componentsCount;
+            _componentsSizes = new int[componentsCount];
+            _parentNodes = new int[componentsCount];
 
-            for(var i = 0; i < length; i++) {
+            for(var i = 0; i < componentsCount; i++) {
                 _componentsSizes[i] = 1;
                 _parentNodes[i] = i;
             }
         }
 
+        /// <summary>
+        /// Returns the index of the root element for the group to element belongs
+        /// </summary>
+        /// <param name="elementIndex">Index of the element</param>
+        /// <returns>
+        /// Index of the root element
+        /// </returns>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the index is greater or equal to
+        /// the initial number of components</exception>
         public int Find(int elementIndex)
         {
-            if(elementIndex >= Length) 
+            if(elementIndex >= InitialComponentsCount) 
             {
                 throw new IndexOutOfRangeException();
             }
@@ -49,9 +62,17 @@ namespace DataStructures
             return rootIndex;
         }
 
+        /// <summary>
+        /// Merges elements into group
+        /// </summary>
+        /// <param name="p">Index of the first element</param>
+        /// <param name="q">Index of the second element</param>
+        /// <returns>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the index is greater or equal to
+        /// the initial number of components</exception>
         public void Unify(int p, int q)
         {
-            if(p >= Length || q >= Length)
+            if(p >= InitialComponentsCount || q >= InitialComponentsCount)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -75,7 +96,7 @@ namespace DataStructures
             _parentNodes[rootOfQ] = rootOfP;
             }
             
-            --Components;
+            --ComponentsCount;
         }
     }
 }

@@ -2,6 +2,10 @@ using System;
 
 namespace DataStructures
 {
+    /// <summary>
+    /// This class represents a collection of elements stored and accessed in FIFO way
+    /// but internally ordered using CompareTo method 
+    /// </summary>
     public class PriorityQueue<T> where T: IComparable
     {
         public int Length { get; private set; }
@@ -12,6 +16,13 @@ namespace DataStructures
             _elements = new DynamicArray<T>(15);
         }
 
+        /// <summary>
+        /// Returns the element from the beggining of the collection without actually removing it
+        /// </summary>
+        /// <returns>
+        /// Element at the begging on the collection
+        /// </returns>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the collection is empty</exception>
         public T Peek()
         {
             if(Length == 0) {
@@ -20,6 +31,10 @@ namespace DataStructures
             return _elements[0];
         }
 
+        /// <summary>
+        /// Adds element to collection
+        /// </summary>
+        /// <param name="element">Element</param>
         public void Enqueue(T element)
         {
             var addedIndex = Length;
@@ -38,6 +53,14 @@ namespace DataStructures
             }
         }
 
+        /// <summary>
+        /// Returns the first element of the collection
+        /// </summary>
+        /// <param name="index">Index of the element</param>
+        /// <returns>
+        /// The element on that particular index
+        /// </returns>
+        /// <exception cref="System.IndexOutOfRangeException">Thrown when the collection is empty</exception>
         public T Dequeue()
         {
             if(Length == 0) {
