@@ -39,6 +39,7 @@ namespace DataStructures
                     return;
                 }
                 AddNode(parentNode.Left, element);
+                return;
             }
 
             if(parentNode.Right == null) 

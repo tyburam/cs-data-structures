@@ -6,6 +6,7 @@ namespace DataStructures.Tests.Enumerators.BinarySearchTree
     {
         protected readonly int[] PreOrderedElements = new int[5] {5, 6, 3, 4, 1};
         protected readonly int[] PostOrderedElements = new int[5] {1, 4, 3, 6, 5};
+        protected readonly int[] LevelOrderedElements = new int[5] {5, 3, 6, 1, 4};
 
         protected BinarySearchTree<int> GetTreeWithElements()
         {
