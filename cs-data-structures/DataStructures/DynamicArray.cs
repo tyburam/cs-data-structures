@@ -41,19 +41,23 @@ namespace DataStructures
         } 
 
         /// <summary>
-        /// Changes the value at given index
+        /// Sets the value at given index
         /// </summary>
         /// <param name="element">Element</param>
         /// <param name="index">Index of the element</param>
         /// <exception cref="System.IndexOutOfRangeException">Thrown when the index is either lesser 
-        /// than 0 or greater or equal to the length of the collection</exception>
+        /// than 0 or greater or equal to the current capacity of the collection</exception>
         public override void SetAt(T element, int index)
         {
-            if(index < 0 || index >= Length) 
+            if(index < 0 || index >= _capacity) 
             {
                 throw new IndexOutOfRangeException();
             }
             _array.SetValue(element, index);
+            if(index > Length)
+            {
+                Length = index+1;
+            }
         }
 
         /// <summary>
@@ -164,6 +168,12 @@ namespace DataStructures
             }
             _array = newArray;
             --Length;
+        }
+
+        public void Clear()
+        {
+            _array = Array.CreateInstance(typeof(T), _capacity);
+            Length = 0;
         }
 
         private void ResizeAndCopy()
