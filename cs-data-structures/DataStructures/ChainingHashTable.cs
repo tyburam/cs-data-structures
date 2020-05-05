@@ -2,6 +2,11 @@ using System;
 
 namespace DataStructures
 {
+    /// <summary>
+    /// This class represents a collection of elements stored as key => value pairs
+    /// with internal mechanism of collision handling which allows hash collision
+    /// but do not allow both hash and key collision
+    /// </summary>
     public class ChainingHashTable<TKey,TValue>
     {
         public DynamicArray<DynamicArray<TKey>> Keys { get; private set; }
@@ -34,6 +39,15 @@ namespace DataStructures
             }
         }
 
+        /// <summary>
+        /// Returns the value associated with given key
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <returns>
+        /// Value  associated with given key
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">Thrown when the key is null</exception>
+        /// <exception cref="System.Collections.Generic.KeyNotFoundException">Thrown when the key is not found</exception>
         public TValue Get(TKey key)
         {
             if(key == null) 
@@ -49,6 +63,13 @@ namespace DataStructures
             return Values[wholeIndex.Item1][wholeIndex.Item2];
         }
 
+        /// <summary>
+        /// Returns the value associated with given key
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <returns>
+        /// Value associated with given key or default value for the value type if couldn't get the value
+        /// </returns>
         public TValue GetOrDefault(TKey key)
         {
             try {
@@ -61,11 +82,24 @@ namespace DataStructures
             }
         }
 
+        /// <summary>
+        /// Adds value to the hash table
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="value">value</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the key is null</exception>
+        /// <exception cref="System.ArgumentException">Thrown when both the key and hash collides</exception>
         public void Add(TKey key, TValue value)
         {
             AddOrSet(key, value, true);
         }
 
+        /// <summary>
+        /// Removes key and its associated value from hash table
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the key is null</exception>
+        /// <exception cref="System.Collections.Generic.KeyNotFoundException">Thrown when the key is not found</exception>
         public void Remove(TKey key)
         {
             if(key == null) 
@@ -82,12 +116,22 @@ namespace DataStructures
             Values[wholeIndex.Item1].RemoveAt(wholeIndex.Item2);
         }
 
+        /// <summary>
+        /// Removes all keys and values
+        /// </summary>
         public void Clear()
         {
             Keys.Clear();
             Values.Clear();
         }
 
+        /// <summary>
+        /// Checks if given key is present in hash table
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <returns>
+        /// True if found, false otherwise
+        /// </returns>
         public bool ContainsKey(TKey key)
         {
             if(key == null) 
@@ -103,6 +147,13 @@ namespace DataStructures
             return true;
         }
 
+        /// <summary>
+        /// Checks if given value is present in hash table
+        /// </summary>
+        /// <param name="value">value</param>
+        /// <returns>
+        /// True if found, false otherwise
+        /// </returns>
         public bool ContainsValue(TValue value)
         {
             for(var i = 0; i < Values.Length; i++)
