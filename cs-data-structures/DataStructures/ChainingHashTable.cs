@@ -1,5 +1,4 @@
 using System;
-using DataStructures.Elements;
 
 namespace DataStructures
 {
@@ -161,10 +160,13 @@ namespace DataStructures
                 return;
             }
 
-            Keys[wholeIndex.Item1] = new DynamicArray<TKey>();
-            Keys[wholeIndex.Item1].Add(key);
+            if(Keys[wholeIndex.Item1] == null)
+            {
+                Keys[wholeIndex.Item1] = new DynamicArray<TKey>();
+                Values[wholeIndex.Item1] = new DynamicArray<TValue>();
+            }
 
-            Values[wholeIndex.Item1] = new DynamicArray<TValue>();
+            Keys[wholeIndex.Item1].Add(key);
             Values[wholeIndex.Item1].Add(value);
         }
     }
