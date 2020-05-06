@@ -9,12 +9,12 @@ Originally it was written and compiled on macOS Catalina using .Net Core 2.2.2.
 # Data structures
 ## HashTables
 HashTable (HashMap, Dictionary, etc) is a data structure that implements an unordered associative array which connects keys with values. It strongly relies on hashing function used to calculate index in which value would be stored internally.  
-We different implementations by the way they solves hash function collisions.
+We different implementations by the way they solves hash function collisions.  
 Examples:
   * [ChainingHashTable](https://github.com/tyburam/cs-data-structures/blob/master/cs-data-structures/DataStructures/ChainingHashTable.cs)
 ## Lists
 List is a data structure that represents collection of values.  
-Typical implementations either uses array which is dynamically realocated or elements of class which at least stores both value and pointer/reference to the next element in the list.
+Typical implementations either uses array which is dynamically realocated or elements of class which at least stores both value and pointer/reference to the next element in the list.  
 Examples:
   * [DynamicArray](https://github.com/tyburam/cs-data-structures/blob/master/cs-data-structures/DataStructures/DynamicArray.cs)
   * [DoubleLinkedList](https://github.com/tyburam/cs-data-structures/blob/master/cs-data-structures/DataStructures/DoubleLinkedList.cs)
