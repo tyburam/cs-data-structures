@@ -4,7 +4,7 @@ Data structures are fundamental for a software engineer. This repository's goal 
 This repository is contribution friendly. If you'd like to add or improve an anything, you are welcome. Feel free to work on your own and then simply make a pull request.
 # Running
 To run this whole example you will first of all need to install .Net Core which is avilable at https://dotnet.microsoft.com/download  
-Additionaly project with test is using XUnit and FluentAssertions.  
+Additionaly project with test is using [XUnit](https://www.nuget.org/packages/xunit/) and [FluentAssertions](https://www.nuget.org/packages/FluentAssertions/).  
 Originally it was written and compiled on macOS Catalina using .Net Core 2.2.2. 
 # Data structures
 ## HashTables
