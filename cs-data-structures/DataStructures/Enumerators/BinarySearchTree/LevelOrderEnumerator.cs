@@ -10,14 +10,14 @@ namespace DataStructures.Enumerators.BinarySearchTree
 
         protected override void FillNodes(BinaryNode<T> node)
         {
-            var parents = new DynamicArray<BinaryNode<T>>();
-            parents.Add(node);
+            var parents = new DynamicArray<BinaryNode<T>>(1);
+            parents[0] = node;
             FillFirstParentThanChildren(parents);
         }
 
         private void FillFirstParentThanChildren(DynamicArray<BinaryNode<T>> nodes)
         {
-            var childNodes = new DynamicArray<BinaryNode<T>>();
+            var childNodes = new DynamicArray<BinaryNode<T>>(0);
             for(var i = 0; i < nodes.Length; i++)
             {
                 _nodes.Add(nodes[i]);

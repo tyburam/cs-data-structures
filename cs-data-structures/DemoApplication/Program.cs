@@ -7,7 +7,7 @@ namespace DemoApplication
     {
         static void Main(string[] args)
         {
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(0);
             for(var i = 0; i < 20; i++) {
                 da.Add(i);
             }

@@ -56,7 +56,8 @@ namespace DataStructures
             }
 
             var wholeIndex = GetIndexAndInnerIndex(key);
-            if(Keys.Length == 0 || Keys[wholeIndex.Item1].Length == 0 || wholeIndex.Item2 == -1) {
+            if(Keys.Length == 0 || Keys[wholeIndex.Item1] == null || Keys[wholeIndex.Item1].Length == 0 
+                || wholeIndex.Item2 == -1) {
                 throw new System.Collections.Generic.KeyNotFoundException();
             }
 
@@ -180,10 +181,10 @@ namespace DataStructures
         {
             int outerIndex = GetIndex(key);
     
-            if(Keys.Length > 0 && Keys[outerIndex].Length > 0) {
+            if(Keys.Length > 0 && Keys[outerIndex] != null && Keys[outerIndex].Length > 0) {
                 for(var i = 0; i < Keys[outerIndex].Length; i++)
                 {
-                    if(Keys[outerIndex][i].Equals(key))
+                    if(key.Equals(Keys[outerIndex][i]))
                     {
                         return new Tuple<int, int>(outerIndex, i);
                     }
@@ -201,7 +202,8 @@ namespace DataStructures
             }
 
             var wholeIndex = GetIndexAndInnerIndex(key);
-            if(Keys.Length > 0 && Keys[wholeIndex.Item1].Length > 0 && wholeIndex.Item2 != -1) 
+            if(Keys.Length > 0 && Keys[wholeIndex.Item1] != null && Keys[wholeIndex.Item1].Length > 0 
+                && wholeIndex.Item2 != -1) 
             {
                 if(throwOnDuplicateKey)
                 {
@@ -213,8 +215,8 @@ namespace DataStructures
 
             if(Keys[wholeIndex.Item1] == null)
             {
-                Keys[wholeIndex.Item1] = new DynamicArray<TKey>();
-                Values[wholeIndex.Item1] = new DynamicArray<TValue>();
+                Keys[wholeIndex.Item1] = new DynamicArray<TKey>(10);
+                Values[wholeIndex.Item1] = new DynamicArray<TValue>(10);
             }
 
             Keys[wholeIndex.Item1].Add(key);

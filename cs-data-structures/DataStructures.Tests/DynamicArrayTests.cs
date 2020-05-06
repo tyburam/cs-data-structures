@@ -10,37 +10,27 @@ namespace DataStructures.Tests
         public void Constructor_ForGoodParameter_CreatesDynamicAray()
         {
             //arrange + act
-            var da = new DynamicArray<int>(10);
+            const int length = 10;
+            var da = new DynamicArray<int>(length);
             //assert
             da.Should().NotBeNull();
-            da.Length.Should().Be(0);
+            da.Length.Should().Be(length);
         }
 
         [Fact]
         public void Constructor_ForBadParameter_ThrowsArgumentException()
         {
             //arrange + act
-            Action act = () => { new DynamicArray<int>(0); };
+            Action act = () => { new DynamicArray<int>(-1); };
             //assert
             act.Should().Throw<ArgumentException>();
-        }
-
-        [Fact]
-        public void GetAt_ForEmptyArray_ThrowsIndexOutOfRangeException()
-        {
-            //arrange
-            var da = new DynamicArray<int>();
-            //act
-            Action act = () => {da.GetAt(0); };
-            //assert
-            act.Should().Throw<IndexOutOfRangeException>();
         }
 
         [Fact]
         public void GetAt_ForIndexLowerThanZero_ThrowsIndexOutOfRangeException()
         {
             //arrange
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             da.Add(1);
             //act
             Action act = () => {da.GetAt(-1); };
@@ -52,7 +42,7 @@ namespace DataStructures.Tests
         public void GetAt_ForIndexEqualLength_ThrowsIndexOutOfRangeException()
         {
             //arrange
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             da.Add(1);
             //act
             Action act = () => {da.GetAt(da.Length); };
@@ -64,7 +54,7 @@ namespace DataStructures.Tests
         public void GetAt_ForIndexGreaterThanLength_ThrowsIndexOutOfRangeException()
         {
             //arrange
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             da.Add(1);
             //act
             Action act = () => {da.GetAt(da.Length+1); };
@@ -77,19 +67,19 @@ namespace DataStructures.Tests
         {
             //arrange
             const int element = 1;
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             //act
             da.Add(element);
             //assert
-            da.Length.Should().Be(1);
-            da.GetAt(0).Should().Be(element);
+            da.Length.Should().Be(11);
+            da.GetAt(10).Should().Be(element);
         }
 
         [Fact]
         public void InsertAt_ForIndexLowerThanZero_ThrowsIndexOutOfRangeException()
         {
             //arrange
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             //act
             Action act = () => {da.InsertAt(1, -1); };
             //assert
@@ -101,11 +91,11 @@ namespace DataStructures.Tests
         {
             //arrange
             const int element = 1;
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             //act
             da.InsertAt(element, 0);
             //assert
-            da.Length.Should().Be(1);
+            da.Length.Should().Be(11);
             da.GetAt(0).Should().Be(element);
         }
 
@@ -114,7 +104,7 @@ namespace DataStructures.Tests
         {
             //arrange
             const int element = 1;
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             //act
             var result = da.IndexOf(element);
             //assert
@@ -127,7 +117,7 @@ namespace DataStructures.Tests
             //arrange
             const int index = 3;
             const int element = 99;
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             for(var i = 0; i < 5; i++) {
                 da.Add(i);
             }
@@ -144,7 +134,7 @@ namespace DataStructures.Tests
             //arrange
             const int index = -1;
             const int element = 99;
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             for(var i = 0; i < 5; i++) {
                 da.Add(i);
             }
@@ -180,7 +170,7 @@ namespace DataStructures.Tests
         public void Remove_ForExistingElement_RemovesIt()
         {
             //arrange
-            const int length= 4;
+            const int length = 4;
             const int value = 11;
             const int element = 99;
             var da = new DynamicArray<int>();
@@ -204,7 +194,7 @@ namespace DataStructures.Tests
             //arrange
             const int length = 5;
             const int value = 11;
-            var da = new DynamicArray<int>();
+            var da = new DynamicArray<int>(10);
             for(var i = 0; i < length; i++) {
                 da.Add(value);
             }
@@ -219,11 +209,7 @@ namespace DataStructures.Tests
         {
             //arrange
             const int length = 5;
-            const int value = 11;
-            var da = new DynamicArray<int>();
-            for(var i = 0; i < length; i++) {
-                da.Add(value);
-            }
+            var da = new DynamicArray<int>(length);
             //act
             Action act = () => { da.RemoveAt(length); };
             //assert
@@ -234,19 +220,17 @@ namespace DataStructures.Tests
         public void RemoveAt_ForGoodIndex_RemovesIt()
         {
             //arrange
-            const int length = 4;
             const int value = 11;
-            const int element = 99;
             const int removalIndex = 3;
-            var da = new DynamicArray<int>();
-            for(var i = 0; i < length+1; i++) {
+            var da = new DynamicArray<int>(0);
+            for(var i = 0; i < 5; i++) {
                 da.Add(value);
             }
-            da[removalIndex] = element;
+            da[removalIndex] = 99;
             //act
             da.RemoveAt(removalIndex);
             //assert
-            da.Length.Should().Be(length);
+            da.Length.Should().Be(4);
             da[0].Should().Be(value);
             da[1].Should().Be(value);
             da[2].Should().Be(value);

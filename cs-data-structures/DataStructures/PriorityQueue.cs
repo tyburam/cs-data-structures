@@ -13,7 +13,7 @@ namespace DataStructures
 
         public PriorityQueue()
         {
-            _elements = new DynamicArray<T>(15);
+            _elements = new DynamicArray<T>();
         }
 
         /// <summary>

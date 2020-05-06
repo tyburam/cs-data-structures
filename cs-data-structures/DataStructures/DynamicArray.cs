@@ -9,17 +9,23 @@ namespace DataStructures
     public class DynamicArray<T> : IndexedDataStructure<T>, IIndexedModificableDataStructure<T>
     {
         private Array _array;
-        private int _capacity;
+        private int _capacity = 32;
 
-        public DynamicArray() : this(10) {}
+        public DynamicArray() : this(0) {}
 
-        public DynamicArray(int initialCapacity)
+        public DynamicArray(int initialLength)
         {
-            if(initialCapacity <= 0) {
-                throw new ArgumentException(nameof(initialCapacity));
+            if(initialLength < 0) {
+                throw new ArgumentException(nameof(initialLength));
             }
-            _array = Array.CreateInstance(typeof(T), initialCapacity);
-            _capacity = initialCapacity;
+
+            if(initialLength > _capacity)
+            {
+                _capacity = initialLength;
+            }
+
+            _array = Array.CreateInstance(typeof(T), _capacity);
+            Length = initialLength;
         }
 
         /// <summary>
@@ -49,7 +55,7 @@ namespace DataStructures
         /// than 0 or greater or equal to the current capacity of the collection</exception>
         public override void SetAt(T element, int index)
         {
-            if(index < 0 || index >= _capacity) 
+            if(index < 0 || index >= Length) 
             {
                 throw new IndexOutOfRangeException();
             }
@@ -96,18 +102,20 @@ namespace DataStructures
             if(Length + 1 >= _capacity) {
                 _capacity += 10;
             }
+
             var newArray = Array.CreateInstance(typeof(T), _capacity);
+            newArray.SetValue(element, index);
+
             for(int i = 0, j = 0 ; i < Length; i++, j++) 
             {
-                if(i == index) {
-                    newArray.SetValue(element, j);
-                    --i;
-                    continue;
+                if(j == index) {
+                    ++j;
                 }
 
                 newArray.SetValue((T)_array.GetValue(i), j);
             }
-            _array.SetValue(element, index);
+            ++Length;
+            _array = newArray;
         }
 
         /// <summary>
