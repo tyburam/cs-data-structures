@@ -1,8 +1,9 @@
 using System;
 using FluentAssertions;
 using Xunit;
+using DataStructures.Hash;
 
-namespace DataStructures.Tests
+namespace DataStructures.Tests.Hash
 {
     public class ChainingHashTableTests
     {
